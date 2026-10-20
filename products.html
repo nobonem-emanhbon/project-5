@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products | G05 Retail</title>
+  <link rel="stylesheet" href="shops.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="bar">
+      <p class="logo"><a href="index.html">G05 Retail</a></p>
+      <nav aria-label="Main navigation">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">products</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="checkout.html">Checkout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-head">
+      <h1>Our products</h1>
+      <p>Browse our latest electronics, apparel and home goods.</p>
+    </section>
+    <section class="content">
+      <h2 id="grid-h" class="visually-hidden">Product lists</h2>
+      <from class="filters" role="search" aria-label="Filter products" action="products.html" method="get">
+        <p><label for="search-input">Search products</label>
+        <input id="search-input" name="q" type="search" placeholder="e.g. headphones" autocomplete="off"></p>
+        <p><label for="category-filter">Category</label>
+          <select id="category-filter" name="category">
+            <option value="all">All</option>
+            <option value="electronics">Electronics</option>
+            <option value="apparel">Apparel</option>
+            <option value="home goods">Home Goods</option>
+          </select>
+        </p>
+        <p><button class="btn" type="submit">Search</button></p>
+      </from>
+
+      <p id="result-count" class="count" role="status" aria-live="polite">showing 8 products</p>
+      <div id="product-grid" class="grid">
+        <article class="product" data-category="electronics" data-name="Wireless Headphones">
+          <div class="thumb" aria-hidden="true">🎧</div>
+          <p class="cat">Electronics</p>
+          <h3><a href="details.html#product-1">Wireless Headphones</a></h3>
+          <p class="price">$59.99</p>
+          <a class="btn" href="details.html#product-1">View details</a>
+        </article>
+
+        <article class="product" data-category="electronics" data-name="Smart Watch">
+          <div class="thumb" aria-hidden="true">⌚</div>
+          <p class="cat">Electronics</p>
+          <h3><a href="details.html#product-2">Smart Watch</a></h3>
+          <p class="price">$129.00</p>
+          <a class="btn" href="details.html#product-2">View details</a>
+        </article>
+
+        <article class="product" data-category="electronics" data-name="Portable Power Bank">
+          <div class="thumb" aria-hidden="true">🔋</div>
+          <p class="cat">Electronics</p>
+          <h3><a href="details.html#product-3">Portable Power Bank</a></h3>
+          <p class="price">$24.99</p>
+          <a class="btn" href="details.html#product-3">View details</a>
+        </article>
+        
+        <article class="product" data-category="apparel" data-name="Classic Cotton T-Shirt">
+          <div class="thumb" aria-hidden="true">👕</div>
+          <p class="cat">Apparel/p>
+          <h3><a href="details.html#product-4">Classic Cotton T-Shirt</a></h3>
+          <p class="price">$14.99</p>
+          <a class="btn" href="details.html#product-4">View details</a>
+        </article>
+
+        <article class="product" data-category="apparel" data-name="Waterproof Jacket">
+          <div class="thumb" aria-hidden="true">🧥</div>
+          <p class="cat">Apparel</p>
+          <h3><a href="detaisl.html#product-5">Waterproof Jacket</a></h3>
+          <p class="price">$79.99</p>
+          <a class="btn" href="details.html#product-5">Waterproof Jacket</a>
+        </article>
+
+        <article class="product" data-category="apparel" data-name="Running Trainers">
+          <div class="thumb" aria-hidden="true">👟</div>
+          <p class="cat">Apparel</p>
+          <h3><a href="details.html#product-6">Running Trainers</a></h3>
+          <p class="price">$64.50</p>
+          <a class="btn" href="details.html#product-6">View details</a>
+        </article>
+
+        <article class="product" data-category="home goods" data-name="Ceramic lamp">
+          <div class="thumb" aria-hidden="true">💡</div>
+          <p class="cat">Home Goods</p>
+          <h3><a href="details.html#product-7">Ceramic lamp</a></h3>
+          <p class="price">$32.00</p>
+          <a class="btn" href="details.html#product-7">View details</a>
+        </article>
+
+        <article class="product" data-category="home goods" data-name="Stoneware Mug">
+          <div class="thumb" aria-hidden="true">🍶</div>
+          <p class="cat">Home Goods</p>
+          <h3><a href="details.html#product-8">Stoneware Mug</a></h3>
+          <p class="price">$19.99</p>
+          <a class="btn" href="details.html#product-8">View details</a>
+        </article>
+      </div>
+      <p id="no-results" class="empty" hidden>No products match your search. Try a different word or category.</p>
+    </section>
+  </main>
+<footer class="site-footer">
+  <p>&copy; 2026 G05 Retail Platform. All rights reserved.</p>
+</footer>
+</body>
+</html>
