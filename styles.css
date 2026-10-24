@@ -180,3 +180,14 @@ table.fun-facts tbody tr:hover td { color: #003d80; font-weight: 600; }
   .section { padding: 24px 16px; }
   table.fun-facts { font-size: 0.85rem; }
 }
+
+.footer {
+    background-color: #1a1a1a;
+    color: #aaa;
+    text-align: center;
+    padding: 12px;
+    margin-top: 32px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
