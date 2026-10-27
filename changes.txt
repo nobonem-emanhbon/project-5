@@ -1,0 +1,14 @@
+Can you guys commit this to the Github page please it's been 5 days since they for some reason terminated all of my Github accounts and I cannot make another one - phuc
+Changes (27th october):
+- Moved every CSS and image files into folders
+- Removed a redundant Navbar element, changed orders of 
+- Removed some unused CSS files during development
+- Adding the footer on About page, as well as the required inquiry links (Jira, Github)
+- Changed the title for most pages to prevent inconsistencies
+- Modified some page elements on index.html and benefits.html 
+- Updated About page
+
+To-do:
+- Fix the improper scaling of navbar and footer on the "benefits" page 
+- Get a proper score on WAVE accessibility evaluation tool on About page
+- Get job reference number on other jobs given on Apply page (optional...?)

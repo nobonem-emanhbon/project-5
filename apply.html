@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Demonstrates some basic HTML form elements">
+  <meta name="keywords" content="HTML, Form, tags">
+  <meta name="author" content="I require therapy this instant.">
+  <title>G05 Retail | Apply</title>
+  <link rel="stylesheet" href="CSS\style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-brand" href="index.html" aria-label="G05 Retail home">
+      <svg class="site-brand__mark" role="img" aria-labelledby="brand-title" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <title id="brand-title">G05 Retail logo</title>
+        <path class="site-brand__mark-bg" d="M12 0h16a12 12 0 0 1 12 12v16a12 12 0 0 1-12 12H12A12 12 0 0 1 0 28V12A12 12 0 0 1 12 0Z"/>
+        <path class="site-brand__mark-g" d="M27.5 13.3A11 11 0 1 0 29 25h-9v-5h15v2.5A15 15 0 1 1 30.5 10z"/>
+        <circle class="site-brand__mark-accent" cx="29" cy="28" r="3"/>
+      </svg>
+      <span class="site-brand__name">G05 Retail</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul class="site-nav__list">
+        <li class="site-nav__item"><a class="site-nav__link" href="jobs.html">Jobs</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="benefits.html">Benefits</a></li>
+        <li class="site-nav__item"><a class="site-nav__link site-nav__link--active" href="apply.html" aria-current="page">Apply</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="aboutus.html">About</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="mailto:info@companyname.com">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1 class="application-page__title">G05 Application form</h1>
+  <p class="notice">The Help Desk is located in HQ at the topmost floor. Open 10:30 to 19:00 Monday to Friday. Check Blackboard for when our evaluators will be there.</p>
+
+  <form class="application-form" method="post" action="http://mercury.swin.edu.au/it000000/formtest.php">
+    <!--Note we have to use a special escape character to print an apostrophe on the Web page -->
+    <fieldset class="form-card">
+      <legend class="form-card__legend">Personal info</legend>
+      <p class="form-field">
+        <label class="form-field__label" for="JobID">Specify your job reference number: </label>
+        <input class="form-control" type="text" name="JobID" id="JobID" maxlength="5" required pattern="([A-Z]{2}[\d]{3})">
+      </p>
+
+      <p class="form-field form-field--name">
+        <label class="form-field__label" for="Fname">First Name: </label>
+        <input class="form-control" type="text" name="Fname" id="Fname" maxlength="20" required pattern="([A-Z]{1}[a-z]{0,19})">
+        <label class="form-field__label" for="Lname">Last Name: </label>
+        <input class="form-control" type="text" name="Lname" id="Lname" maxlength="20" required pattern="([A-Z]{1}[a-z]{0,19})">
+      </p>
+
+      <p class="form-field">
+        <label class="form-field__label" for="Mail">Your email: </label>
+        <input class="form-control" type="email" name="Mail" id="Mail" required>
+      </p>
+
+      <p class="form-field">
+        <label class="form-field__label" for="PN">Your Phone number: </label>
+        <input class="form-control" type="text" name="PN" id="PN" maxlength="12" required pattern="^[0-9]*">
+      </p>
+
+      <p class="form-field form-field--address">
+        <label class="form-field__label" for="addr">Street address: </label>
+        <input class="form-control" type="text" name="addr" id="addr" maxlength="40" required>
+        <label class="form-field__label" for="town">Suburb/town: </label>
+        <input class="form-control" type="text" name="town" id="town" maxlength="40" required>
+        <label class="form-field__label" for="code">Postcode: </label>
+        <input class="form-control" type="text" name="code" id="code" maxlength="4" required pattern="^[0-9]*">
+      </p>
+
+      <p class="form-field">
+        <label class="form-field__label" for="tutor">Your state: </label>
+        <select class="form-control" name="tutor" id="tutor" required>
+          <option value="">Please Select</option>
+          <option value="VIC" required>VIC</option>
+          <option value="NSW" required>NSW</option>
+          <option value="QLD" required>QLD</option>
+          <option value="NT" required>NT</option>
+          <option value="WA" required>WA</option>
+          <option value="SA" required>SA</option>
+          <option value="TAS" required>TAS</option>
+          <option value="ACT" required>ACT</option>
+        </select>
+      </p>
+
+      <p class="form-field">
+        <label class="form-field__label" for="date">Date of birth:</label>
+        <input class="form-control" type="date" name="date" id="date" placeholder="dd-mm-yyyy" required>
+      </p>
+    </fieldset>
+
+    <hr class="application-form__divider">
+
+    <fieldset class="form-card">
+      <legend class="form-card__legend">Your gender</legend>
+      <p class="form-field form-field--options">
+        <label class="form-option" for="sub1">Male
+          <input class="form-option__control" type="radio" id="sub1" name="unit" value="sub1" required>
+        </label>
+        <label class="form-option" for="sub2">Female
+          <input class="form-option__control" type="radio" id="sub2" name="unit" value="sub2" required>
+        </label>
+        <label class="form-option" for="sub3">Non-binary
+          <input class="form-option__control" type="radio" id="sub3" name="unit" value="sub3" required>
+        </label>
+      </p>
+    </fieldset>
+
+    <hr class="application-form__divider">
+
+    <fieldset class="form-card">
+      <legend class="form-card__legend">Skill lists</legend>
+      <p class="form-field form-field--options">
+        <label class="form-option" for="HTML">Cashier</label>
+        <input class="form-option__control" type="checkbox" name="topic" id="HTML" value="HTML">
+        <label class="form-option" for="CSS">Store Manager</label>
+        <input class="form-option__control" type="checkbox" name="topic" id="CSS" value="CSS">
+        <label class="form-option" for="JS">Advertising &amp; Marketing</label>
+        <input class="form-option__control" type="checkbox" name="topic" id="JS" value="JS">
+        <label class="form-option" for="PHP">Janitor</label>
+        <input class="form-option__control" type="checkbox" name="topic" id="PHP" value="PHP">
+        <label class="form-option" for="MSQL">Stocker</label>
+        <input class="form-option__control" type="checkbox" name="topic" id="MSQL" value="MSQL">
+        <label class="form-option" for="M">Other</label>
+        <input class="form-option__control" type="checkbox" name="topic" id="M" value="M">
+      </p>
+      <p class="form-field form-field--textarea-label">
+        <label class="form-field__label" for="comments">Explain your position:</label>
+      </p>
+      <textarea class="form-control form-control--textarea" id="comments" name="comments" placeholder="Write description of your submission here." required></textarea>
+      <p class="form-field form-field--textarea-label">
+        <label class="form-field__label" for="other-skills">Other skills</label>
+      </p>
+      <textarea class="form-control form-control--textarea" id="other-skills" name="comments" placeholder="Write description of your other potential here."></textarea>
+    </fieldset>
+
+    <hr class="application-form__divider">
+
+    <input class="button button--primary" type="submit" value="Book">
+    <input class="button button--secondary" type="reset" value="Reset Form">
+  </form>
+
+  <footer class="site-footer" id="contact">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h2 class="footer-brand__name">G05 Retail</h2>
+        <p class="footer-brand__copyright">&copy; 2026 G05 Retail. All rights reserved.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Project and contact links">
+        <ul class="footer-links">
+          <li class="footer-links__item"><a class="footer-links__link" href="https://ngdinhan08-1790740529378.atlassian.net/browse/SCRUM-5?atlOrigin=eyJpIjoiNzU4MTgwY2Y4MGVkNDBhZGIyZGRjOTU4ZDQ2NzgzZjYiLCJwIjoiaiJ9" target="_blank" rel="noopener">Jira project</a></li>
+          <li class="footer-links__item"><a class="footer-links__link" href="https://github.com/nobonem-emanhbon/project-5.git" target="_blank" rel="noopener">GitHub repository</a></li>
+          <li class="footer-links__item"><a class="footer-links__link" href="mailto:info@companyname.com">booking@G05.com</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

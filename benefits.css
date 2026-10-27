@@ -1,0 +1,119 @@
+/* ===== G05 Retail - Benefits page styles ===== */
+:root {
+  --ink: #1b1f24;
+  --muted: #5a6470;
+  --blue: #0b66c3;
+  --navy: #003f87;
+  --yellow: #f5c518;
+  --cream: #f3f1ec;
+  --cream-note: #fff6d6;
+  --tint: #eaf2fc;
+  --line: #d9dde3;
+  --white: #ffffff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.55;
+}
+
+/* Header (same pattern as other pages) */
+header {
+  background: var(--ink);
+  border-bottom: 2px solid var(--yellow);
+}
+.nav {
+  max-width: 1000px; margin: 0 auto; padding: 0.75rem 1rem;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+}
+.brand { white-space: nowrap; display: flex; align-items: center; gap: 0.6rem; color: var(--white); font-weight: 700; text-decoration: none; }
+.brand-mark { width: 36px; height: 36px; flex: 0 0 36px; display: block; }
+nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1.1rem; margin: 0; padding: 0; }
+nav a { color: var(--white); text-decoration: none; font-size: 0.85rem; font-weight: 600; }
+nav a:hover, nav a:focus-visible { color: var(--yellow); }
+nav a[aria-current="page"] { color: var(--yellow); }
+
+main { max-width: 860px; margin: 0 auto; padding: 2rem 1rem 3rem; }
+
+.eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); margin: 0 0 0.3rem; }
+h1 { font-size: 2.1rem; margin: 0 0 0.5rem; line-height: 1.15; }
+.lede { color: var(--muted); max-width: 62ch; margin: 0 0 1.5rem; }
+
+.card {
+  background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+  padding: 1.4rem 1.5rem; margin-bottom: 1.25rem;
+}
+.card h2 {
+  font-size: 1.15rem; margin: 0 0 0.8rem; padding-left: 0.7rem; border-left: 3px solid var(--blue);
+}
+.card p { margin: 0 0 0.75rem; font-size: 0.92rem; }
+.card p:last-child { margin-bottom: 0; }
+
+/* Benefits grid */
+.benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.9rem; }
+.benefit {
+  background: var(--tint); border: 1px solid #cfe0f5; border-radius: 10px; padding: 1rem;
+}
+.benefit .icon {
+  width: 34px; height: 34px; border-radius: 8px; background: var(--blue); color: var(--white);
+  display: grid; place-items: center; font-size: 1.05rem; margin-bottom: 0.6rem;
+}
+.benefit h3 { margin: 0 0 0.3rem; font-size: 0.98rem; color: var(--navy); }
+.benefit p { margin: 0; font-size: 0.86rem; color: var(--muted); }
+
+
+/* Career path: a real sequence, so numbered steps are appropriate */
+.path { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; counter-reset: step; }
+.path li {
+  counter-increment: step; display: grid; grid-template-columns: 2rem 1fr; gap: 0.8rem; align-items: start;
+}
+.path li::before {
+  content: counter(step); width: 2rem; height: 2rem; border-radius: 50%;
+  background: var(--yellow); color: var(--ink); font-weight: 800; display: grid; place-items: center;
+}
+.path strong { display: block; font-size: 0.95rem; }
+.path span { font-size: 0.86rem; color: var(--muted); }
+
+.values { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.9rem; }
+.values div { border-left: 3px solid var(--yellow); padding-left: 0.8rem; }
+.values h3 { margin: 0 0 0.2rem; font-size: 0.95rem; }
+.values p { margin: 0; font-size: 0.86rem; color: var(--muted); }
+
+/* Call to action (matches the "How to apply" note style) */
+.cta { background: var(--cream-note); border: 1px solid #ecd98a; text-align: center; }
+.cta h2 { border: 0; padding: 0; }
+.btn {
+  display: inline-block; background: var(--blue); color: var(--white); text-decoration: none;
+  font-weight: 700; font-size: 0.9rem; padding: 0.7rem 1.4rem; border-radius: 999px; margin: 0.25rem 0.2rem 0;
+}
+.btn:hover, .btn:focus-visible { background: var(--navy); }
+.btn.secondary { background: var(--white); color: var(--blue); border: 1.5px solid var(--blue); }
+.btn.secondary:hover, .btn.secondary:focus-visible { background: var(--tint); }
+
+/* Images */
+.art { display: block; width: 100%; height: auto; }
+.hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.5rem; align-items: center; padding: 1.6rem; }
+.hero h1 { margin-bottom: 0.6rem; }
+.hero .lede { margin-bottom: 1rem; }
+.growth { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; align-items: center; }
+@media (max-width: 640px) {
+  .hero, .growth { grid-template-columns: 1fr; }
+  .hero .art { order: -1; max-width: 360px; margin: 0 auto; }
+  .growth .art { max-width: 320px; margin: 0 auto; }
+}
+
+footer { background: var(--ink); color: var(--white); padding: 1.2rem 1rem; font-size: 0.8rem; }
+.footer-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+footer a { color: var(--white); text-decoration: none; margin-left: 1rem; }
+footer a:hover { color: var(--yellow); }
+
+a:focus-visible, .btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+@media (max-width: 560px) {
+  h1 { font-size: 1.7rem; }
+  .card { padding: 1.1rem; }
+  footer a { margin: 0 1rem 0 0; }
+}

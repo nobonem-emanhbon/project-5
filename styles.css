@@ -1,0 +1,265 @@
+/* ===== G05 Retail - shared styles ===== */
+:root {
+  --dark: #1a1a1a;
+  --blue: #007bff;
+  --blue-dark: #0056b3;
+  --blue-light: #cfe6ff;
+  --bg: #f8f9fa;
+  --bg-alt: #e9ecef;
+  --text: #2b2b2b;
+  --muted: #9aa0a6;
+  --white: #ffffff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+a { color: var(--blue); }
+
+/* ===== Navbar ===== */
+.navbar {
+  background: var(--dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 30px;
+}
+.navbar .logo {
+  color: var(--white);
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.navbar ul { list-style: none; display: flex; gap: 22px; }
+.navbar a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.navbar a:hover,
+.navbar a.active { color: var(--blue); }
+
+/* ===== Hero ===== */
+.hero {
+  background: var(--blue);
+  color: var(--white);
+  text-align: center;
+  padding: 70px 20px;
+}
+.hero h1 { font-size: 2.4rem; margin-bottom: 14px; }
+.hero p { font-size: 1rem; margin-bottom: 24px; }
+.btn {
+  display: inline-block;
+  background: var(--white);
+  color: var(--blue);
+  font-weight: 600;
+  padding: 14px 24px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.btn:hover { background: var(--blue-light); }
+
+/* ===== Sections / cards ===== */
+.section { padding: 40px 30px; max-width: 1100px; margin: 0 auto; }
+.section h2 { text-align: center; margin-bottom: 24px; font-size: 1.6rem; }
+
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 24px 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  margin-bottom: 28px;
+}
+.card h3 { margin-bottom: 12px; }
+
+/* ===== Footer ===== */
+.footer {
+  background: var(--dark);
+  color: var(--muted);
+  text-align: center;
+  padding: 26px 20px;
+  font-size: 0.9rem;
+  margin-top: 40px;
+}
+
+/* ===== about.html ===== */
+.page-title { text-align: center; margin: 36px 0 8px; font-size: 2rem; }
+.page-sub { text-align: center; color: #6c757d; margin-bottom: 10px; }
+
+/* Nested list */
+.group-info > li { font-weight: 600; margin-bottom: 8px; }
+.group-info ul { margin: 6px 0 0 24px; font-weight: 400; }
+
+/* Styled student IDs */
+.student-id {
+  display: inline-block;
+  background: #e7f1ff;
+  color: #0056b3;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  padding: 1px 8px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-left: 6px;
+}
+
+/* Definition list */
+.members dt {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-top: 18px;
+  padding-left: 10px;
+  border-left: 4px solid var(--blue);
+}
+.members dd { margin: 6px 0 0 24px; }
+.members .quote {
+  font-style: italic;
+  color: #495057;
+  background: var(--bg);
+  border-left: 3px solid var(--bg-alt);
+  padding: 6px 12px;
+  margin-top: 8px;
+}
+.members .lang { font-size: 0.8rem; font-weight: 700; color: var(--blue-dark); }
+
+/* Bordered figure */
+figure.group-photo {
+  max-width: 720px;
+  margin: 0 auto 28px;
+  border: 4px solid var(--blue);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--white);
+  text-align: center;
+}
+figure.group-photo img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+figure.group-photo figcaption {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #495057;
+}
+
+/* Styled table with hex colours + hover */
+table.fun-facts {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  overflow: hidden;
+  border-radius: 8px;
+}
+table.fun-facts caption {
+  caption-side: bottom;
+  padding: 10px;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #495057;
+}
+table.fun-facts th {
+  background: #007bff;
+  color: #ffffff;
+  text-align: left;
+  padding: 12px 14px;
+}
+table.fun-facts td { padding: 11px 14px; border-bottom: 1px solid #dee2e6; }
+table.fun-facts tbody tr:nth-child(even) { background: #f1f5f9; }
+table.fun-facts tbody tr { transition: background 0.2s; }
+table.fun-facts tbody tr:hover { background: #cfe6ff; }
+table.fun-facts tbody tr:hover td { color: #003d80; font-weight: 600; }
+
+@media (max-width: 700px) {
+  .navbar { flex-direction: column; gap: 10px; }
+  .section { padding: 24px 16px; }
+  table.fun-facts { font-size: 0.85rem; }
+}
+
+/* Footer */
+.footer {
+    background-color: #1a1a1a;
+    color: #aaa;
+    text-align: center;
+    padding: 12px;
+    margin-top: 32px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+/* ===== Site header (shared by every page) ===== */
+.site-header {
+  background: #1b1f24;
+  border-bottom: 2px solid #f5c518;
+}
+.site-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.site-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-brand .brand-mark {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  display: block;
+}
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.site-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.site-nav a:hover,
+.site-nav a:focus-visible,
+.site-nav a[aria-current="page"] {
+  color: #f5c518;
+}
+/* Align image and name side-by-side */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+/* Style the image into a neat circle */
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover; /* Prevents image distortion */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure the name aligns vertically */
+.profile-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
