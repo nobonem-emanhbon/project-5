@@ -1,113 +1,160 @@
-<?php include 'header.php'; ?>
+<?php
+/*
+ * apply.php - the expression of interest form (was apply.html in Part 1).
+ *
+ * What changed from Part 1:
+ *  - posts to process_eoi.php on our own server (it used to post to a lab test URL)
+ *  - client-side HTML validation is switched off (novalidate, no required/pattern/maxlength);
+ *    process_eoi.php checks everything on the server instead, as the brief asks
+ *  - field names are readable (the old ones came from a lecture template: "tutor" held the state,
+ *    "unit" held the gender, "topic" held the skills, and both text boxes were called "comments")
+ *  - skill checkbox values match their labels (they were HTML, CSS, JS, PHP and MSQL)
+ *  - if the server finds a mistake, you come back here with what you typed still filled in
+ */
+require_once 'functions.php';
+start_secure_session();
 
-<h1 class="application-page__title">G05 Application form</h1>
-<p class="notice">The Help Desk is located in HQ at the topmost floor. Open 10:30 to 19:00 Monday to Friday. Check Blackboard for when our evaluators will be there.</p>
+$conn = db_connect();
+create_jobs_table($conn);
+$jobs = get_job_options($conn);
 
-<!-- ACTION UPDATED TO process_apply.php -->
-<form class="application-form" method="post" action="process_apply.php">
-  <fieldset class="form-card">
-    <legend class="form-card__legend">Personal info</legend>
-    <p class="form-field">
-      <label class="form-field__label" for="JobID">Specify your job reference number: </label>
-      <input class="form-control" type="text" name="JobID" id="JobID" maxlength="5" required pattern="([A-Z]{2}[\d]{3})">
-    </p>
+// Errors and previously typed values come back from process_eoi.php through the session
+$errors = isset($_SESSION['eoi_errors']) && is_array($_SESSION['eoi_errors']) ? $_SESSION['eoi_errors'] : [];
+$old    = isset($_SESSION['eoi_old']) && is_array($_SESSION['eoi_old']) ? $_SESSION['eoi_old'] : [];
+unset($_SESSION['eoi_errors'], $_SESSION['eoi_old']);
 
-    <p class="form-field form-field--name">
-      <label class="form-field__label" for="Fname">First Name: </label>
-      <input class="form-control" type="text" name="Fname" id="Fname" maxlength="20" required pattern="([A-Z]{1}[a-z]{0,19})">
-      <label class="form-field__label" for="Lname">Last Name: </label>
-      <input class="form-control" type="text" name="Lname" id="Lname" maxlength="20" required pattern="([A-Z]{1}[a-z]{0,19})">
-    </p>
+// "Apply for this role" on jobs.php links here with ?job=RM101
+if (!isset($old['job_ref']) && isset($_GET['job']) && is_string($_GET['job'])) {
+    $wanted = strtoupper(trim($_GET['job']));
+    if (isset($jobs[$wanted])) {
+        $old['job_ref'] = $wanted;
+    }
+}
 
-    <p class="form-field">
-      <label class="form-field__label" for="Mail">Your email: </label>
-      <input class="form-control" type="email" name="Mail" id="Mail" required>
-    </p>
+/** Value to put back into a text box. Escaped here because it's the person's raw input. */
+function old_value(array $old, string $key): string
+{
+    return isset($old[$key]) && is_string($old[$key])
+        ? htmlspecialchars($old[$key], ENT_QUOTES, 'UTF-8')
+        : '';
+}
 
-    <p class="form-field">
-      <label class="form-field__label" for="PN">Your Phone number: </label>
-      <input class="form-control" type="text" name="PN" id="PN" maxlength="12" required pattern="^[0-9]*">
-    </p>
+$old_skills = isset($old['skills']) && is_array($old['skills']) ? $old['skills'] : [];
 
-    <p class="form-field form-field--address">
-      <label class="form-field__label" for="addr">Street address: </label>
-      <input class="form-control" type="text" name="addr" id="addr" maxlength="40" required>
-      <label class="form-field__label" for="town">Suburb/town: </label>
-      <input class="form-control" type="text" name="town" id="town" maxlength="40" required>
-      <label class="form-field__label" for="code">Postcode: </label>
-      <input class="form-control" type="text" name="code" id="code" maxlength="4" required pattern="^[0-9]*">
-    </p>
+$page_title  = 'G05 Retail | Apply';
+$active_page = 'apply';
+require 'header.inc';
+?>
 
-    <p class="form-field">
-      <label class="form-field__label" for="tutor">Your state: </label>
-      <select class="form-control" name="tutor" id="tutor" required>
-        <option value="">Please Select</option>
-        <option value="VIC">VIC</option>
-        <option value="NSW">NSW</option>
-        <option value="QLD">QLD</option>
-        <option value="NT">NT</option>
-        <option value="WA">WA</option>
-        <option value="SA">SA</option>
-        <option value="TAS">TAS</option>
-        <option value="ACT">ACT</option>
-      </select>
-    </p>
+  <main>
+    <h1 class="application-page__title">G05 Application form</h1>
+    <p class="notice">The Help Desk is located in HQ at the topmost floor. Open 10:30 to 19:00 Monday to Friday. Check Blackboard for when our evaluators will be there.</p>
 
-    <p class="form-field">
-      <label class="form-field__label" for="date">Date of birth:</label>
-      <input class="form-control" type="date" name="date" id="date" placeholder="dd-mm-yyyy" required>
-    </p>
-  </fieldset>
+<?php if ($errors): ?>
+    <div class="message message--error" role="alert">
+      <p><strong>Your application hasn&rsquo;t been sent yet.</strong> Please fix the following and submit again:</p>
+      <ul>
+<?php foreach ($errors as $error): ?>
+        <li><?= e($error) ?></li>
+<?php endforeach; ?>
+      </ul>
+    </div>
+<?php endif; ?>
 
-  <hr class="application-form__divider">
+    <!-- novalidate = the browser doesn't check anything; the server does it all -->
+    <form class="application-form" method="post" action="process_eoi.php" novalidate>
+      <fieldset class="form-card">
+        <legend class="form-card__legend">Personal info</legend>
+        <p class="form-field">
+          <label class="form-field__label" for="job_ref">Specify your job reference number: </label>
+          <input class="form-control" type="text" name="job_ref" id="job_ref" list="job-refs" value="<?= old_value($old, 'job_ref') ?>" placeholder="e.g. RM101" autocomplete="off">
+          <datalist id="job-refs">
+<?php foreach ($jobs as $reference => $title): ?>
+            <option value="<?= e($reference) ?>"><?= e($title) ?></option>
+<?php endforeach; ?>
+          </datalist>
+        </p>
 
-  <fieldset class="form-card">
-    <legend class="form-card__legend">Your gender</legend>
-    <p class="form-field form-field--options">
-      <label class="form-option" for="sub1">Male
-        <input class="form-option__control" type="radio" id="sub1" name="unit" value="Male" required>
-      </label>
-      <label class="form-option" for="sub2">Female
-        <input class="form-option__control" type="radio" id="sub2" name="unit" value="Female" required>
-      </label>
-      <label class="form-option" for="sub3">Non-binary
-        <input class="form-option__control" type="radio" id="sub3" name="unit" value="Non-binary" required>
-      </label>
-    </p>
-  </fieldset>
+        <p class="form-field form-field--name">
+          <label class="form-field__label" for="first_name">First Name: </label>
+          <input class="form-control" type="text" name="first_name" id="first_name" value="<?= old_value($old, 'first_name') ?>" autocomplete="given-name">
+          <label class="form-field__label" for="last_name">Last Name: </label>
+          <input class="form-control" type="text" name="last_name" id="last_name" value="<?= old_value($old, 'last_name') ?>" autocomplete="family-name">
+        </p>
 
-  <hr class="application-form__divider">
+        <p class="form-field">
+          <label class="form-field__label" for="email">Your email: </label>
+          <input class="form-control" type="email" name="email" id="email" value="<?= old_value($old, 'email') ?>" autocomplete="email">
+        </p>
 
-  <fieldset class="form-card">
-    <legend class="form-card__legend">Skill lists</legend>
-    <p class="form-field form-field--options">
-      <label class="form-option" for="HTML">Cashier</label>
-      <input class="form-option__control" type="checkbox" name="topic" id="HTML" value="Cashier">
-      <label class="form-option" for="CSS">Store Manager</label>
-      <input class="form-option__control" type="checkbox" name="topic" id="CSS" value="Store Manager">
-      <label class="form-option" for="JS">Advertising &amp; Marketing</label>
-      <input class="form-option__control" type="checkbox" name="topic" id="JS" value="Advertising &amp; Marketing">
-      <label class="form-option" for="PHP">Janitor</label>
-      <input class="form-option__control" type="checkbox" name="topic" id="PHP" value="Janitor">
-      <label class="form-option" for="MSQL">Stocker</label>
-      <input class="form-option__control" type="checkbox" name="topic" id="MSQL" value="Stocker">
-      <label class="form-option" for="M">Other</label>
-      <input class="form-option__control" type="checkbox" name="topic" id="M" value="Other">
-    </p>
-    <p class="form-field form-field--textarea-label">
-      <label class="form-field__label" for="comments">Explain your position:</label>
-    </p>
-    <textarea class="form-control form-control--textarea" id="comments" name="comments" placeholder="Write description of your submission here." required></textarea>
-    <p class="form-field form-field--textarea-label">
-      <label class="form-field__label" for="other-skills">Other skills</label>
-    </p>
-    <textarea class="form-control form-control--textarea" id="other-skills" name="other_skills" placeholder="Write description of your other potential here."></textarea>
-  </fieldset>
+        <p class="form-field">
+          <label class="form-field__label" for="phone">Your Phone number: </label>
+          <input class="form-control" type="text" name="phone" id="phone" value="<?= old_value($old, 'phone') ?>" placeholder="8 to 12 digits" autocomplete="tel">
+        </p>
 
-  <hr class="application-form__divider">
+        <p class="form-field form-field--address">
+          <label class="form-field__label" for="street">Street address: </label>
+          <input class="form-control" type="text" name="street" id="street" value="<?= old_value($old, 'street') ?>" autocomplete="street-address">
+          <label class="form-field__label" for="suburb">Suburb/town: </label>
+          <input class="form-control" type="text" name="suburb" id="suburb" value="<?= old_value($old, 'suburb') ?>" autocomplete="address-level2">
+          <label class="form-field__label" for="postcode">Postcode: </label>
+          <input class="form-control" type="text" name="postcode" id="postcode" value="<?= old_value($old, 'postcode') ?>" inputmode="numeric" autocomplete="postal-code">
+        </p>
 
-  <input class="button button--primary" type="submit" value="Book">
-  <input class="button button--secondary" type="reset" value="Reset Form">
-</form>
+        <p class="form-field">
+          <label class="form-field__label" for="state">Your state: </label>
+          <select class="form-control" name="state" id="state">
+            <option value="">Please Select</option>
+<?php foreach (state_options() as $state): ?>
+            <option value="<?= e($state) ?>"<?= (isset($old['state']) && $old['state'] === $state) ? ' selected' : '' ?>><?= e($state) ?></option>
+<?php endforeach; ?>
+          </select>
+        </p>
 
-<?php include 'footer.php'; ?>
+        <p class="form-field">
+          <label class="form-field__label" for="dob">Date of birth:</label>
+          <input class="form-control" type="date" name="dob" id="dob" value="<?= old_value($old, 'dob') ?>" placeholder="dd/mm/yyyy">
+        </p>
+      </fieldset>
+
+      <hr class="application-form__divider">
+
+      <fieldset class="form-card">
+        <legend class="form-card__legend">Your gender</legend>
+        <p class="form-field form-field--options">
+<?php foreach (gender_options() as $i => $gender): ?>
+          <label class="form-option" for="gender<?= $i ?>"><?= e($gender) ?>
+            <input class="form-option__control" type="radio" id="gender<?= $i ?>" name="gender" value="<?= e($gender) ?>"<?= (isset($old['gender']) && $old['gender'] === $gender) ? ' checked' : '' ?>>
+          </label>
+<?php endforeach; ?>
+        </p>
+      </fieldset>
+
+      <hr class="application-form__divider">
+
+      <fieldset class="form-card">
+        <legend class="form-card__legend">Skill lists</legend>
+        <p class="form-field form-field--options">
+<?php foreach (skill_options() as $value => $label): ?>
+          <label class="form-option" for="skill-<?= e($value) ?>"><?= e($label) ?></label>
+          <input class="form-option__control" type="checkbox" name="skills[]" id="skill-<?= e($value) ?>" value="<?= e($value) ?>"<?= in_array($value, $old_skills, true) ? ' checked' : '' ?>>
+<?php endforeach; ?>
+        </p>
+        <p class="form-field form-field--textarea-label">
+          <label class="form-field__label" for="comments">Explain your position:</label>
+        </p>
+        <textarea class="form-control form-control--textarea" id="comments" name="comments" placeholder="Write description of your submission here."><?= old_value($old, 'comments') ?></textarea>
+        <p class="form-field form-field--textarea-label">
+          <label class="form-field__label" for="other_skills">Other skills</label>
+        </p>
+        <textarea class="form-control form-control--textarea" id="other_skills" name="other_skills" placeholder="Write description of your other potential here."><?= old_value($old, 'other_skills') ?></textarea>
+      </fieldset>
+
+      <hr class="application-form__divider">
+
+      <input class="button button--primary" type="submit" value="Submit application">
+      <input class="button button--secondary" type="reset" value="Reset Form">
+    </form>
+  </main>
+
+<?php include 'footer.inc'; ?>
