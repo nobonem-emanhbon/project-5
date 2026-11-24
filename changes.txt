@@ -12,3 +12,7 @@ To-do:
 - Fix the improper scaling of navbar and footer on the "benefits" page 
 - Get a proper score on WAVE accessibility evaluation tool on About page
 - Get job reference number on other jobs given on Apply page (optional...?)
+
+NEW: Oh wonderful, they did it again! Can I seriously catch a break...
+Changes (18th november):
+- (small) Following the part 2/2 of the project's initiative, all .html files are converted to .php (clone the repo to htdocs now!)

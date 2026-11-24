@@ -8,26 +8,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="site-brand" href="index.php" aria-label="G05 Retail home">
-      <svg class="site-brand__mark" role="img" aria-labelledby="brand-title" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-        <title id="brand-title">G05 Retail logo</title>
-        <path class="site-brand__mark-bg" d="M12 0h16a12 12 0 0 1 12 12v16a12 12 0 0 1-12 12H12A12 12 0 0 1 0 28V12A12 12 0 0 1 12 0Z"/>
-        <path class="site-brand__mark-g" d="M27.5 13.3A11 11 0 1 0 29 25h-9v-5h15v2.5A15 15 0 1 1 30.5 10z"/>
-        <circle class="site-brand__mark-accent" cx="29" cy="28" r="3"/>
-      </svg>
-      <span class="site-brand__name">G05 Retail</span>
-    </a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <ul class="site-nav__list">
-        <li class="site-nav__item"><a class="site-nav__link" href="jobs.php">Jobs</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="benefits.php">Benefits</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="apply.php">Apply</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="aboutus.php">About</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="mailto:info@companyname.com">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  <?php include 'header.php'; ?>
 
   <main class="home-main">
     <section class="home-hero" id="hero" aria-labelledby="home-title">
@@ -120,20 +101,6 @@
 
   </main>
 
-  <footer class="site-footer" id="contact">
-    <div class="footer-content">
-      <div class="footer-brand">
-        <h2 class="footer-brand__name">G05 Retail</h2>
-        <p class="footer-brand__copyright">&copy; 2026 G05 Retail. All rights reserved.</p>
-      </div>
-      <nav class="footer-nav" aria-label="Project and contact links">
-        <ul class="footer-links">
-          <li class="footer-links__item"><a class="footer-links__link" href="https://ngdinhan08-1790740529378.atlassian.net/browse/SCRUM-5?atlOrigin=eyJpIjoiNzU4MTgwY2Y4MGVkNDBhZGIyZGRjOTU4ZDQ2NzgzZjYiLCJwIjoiaiJ9" target="_blank" rel="noopener">Jira project</a></li>
-          <li class="footer-links__item"><a class="footer-links__link" href="https://github.com/nobonem-emanhbon/project-5.git" target="_blank" rel="noopener">GitHub repository</a></li>
-          <li class="footer-links__item"><a class="footer-links__link" href="mailto:info@companyname.com">booking@G05.com</a></li>
-        </ul>
-      </nav>
-    </div>
-  </footer>
+  <?php include 'footer.php'; ?>
 </body>
 </html>
