@@ -14,6 +14,8 @@ if (!empty($search_query)) {
 }
 ?>
 
+<link rel="stylesheet" href="style.css">
+
 <main class="jobs-main">
   <section class="page-intro" aria-labelledby="page-title">
     <p class="eyebrow">Careers at G05 Retail</p>

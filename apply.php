@@ -1,5 +1,7 @@
 <?php include 'header.php'; ?>
 
+<link rel="stylesheet" href="style.css">
+
 <h1 class="application-page__title">G05 Application form</h1>
 <p class="notice">The Help Desk is located in HQ at the topmost floor. Open 10:30 to 19:00 Monday to Friday. Check Blackboard for when our evaluators will be there.</p>
 
