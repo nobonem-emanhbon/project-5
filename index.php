@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Shop thoughtfully at G05 Retail and explore careers built around great customer service.">
-  <title>G05 Retail | Everyday shopping, made better</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <?php include 'header.php'; ?>
+<?php
+// Set page metadata before requiring header.php so <title> and active nav render accurately.
+$page_title       = 'G05 Retail | Everyday shopping, made better';
+$page_description = 'Shop thoughtfully at G05 Retail and explore careers built around great customer service.';
+$active_page      = 'home';
+
+require __DIR__ . '/header.php';
+?>
 
   <main class="home-main">
     <section class="home-hero" id="hero" aria-labelledby="home-title">
@@ -43,19 +40,22 @@
     </section>
 
     <section class="card home-card" id="about" aria-labelledby="about-title">
-        <div class="home-card__text">
-          <h2 class="card__title" id="about-title">A great place to shop—and work</h2>
-          <p class="home-card__copy">We believe the best retail experiences are built by helpful people, quality essentials, and a store that feels easy to explore. At G05 Retail, every team member plays a part in making customers feel valued.</p>
-        </div>
-        <div class="home-card__image">
-          <img src="Illustration-people-shop.jpg" alt="Retail Illustration">
-        </div>
+      <div class="home-card__text">
+        <h2 class="card__title" id="about-title">A great place to shop—and work</h2>
+        <p class="home-card__copy">We believe the best retail experiences are built by helpful people, quality essentials, and a store that feels easy to explore. At G05 Retail, every team member plays a part in making customers feel valued.</p>
+      </div>
+      <div class="home-card__image">
+        <img src="Illustration-people-shop.jpg" alt="Retail Illustration">
+      </div>
     </section>
+
     <section class="card home-card" aria-labelledby="careers-title">
       <h2 class="card__title" id="careers-title">Join our team</h2>
       <p class="home-card__copy">Bring your curiosity, reliability, and care for customers. Explore our selection and take the first step towards a rewarding role at G05 Retail.</p>
-      <a class="button button--primary" href="jobs.php">Explore careers</a>  <a class="button button--primary" href="apply.php">Apply now</a>
+      <a class="button button--primary" href="jobs.php">Explore careers</a>
+      <a class="button button--primary" href="apply.php">Apply now</a>
     </section>
+
     <form class="job-search card" id="search" role="search" action="jobs.php" method="get">
       <label class="job-search__label" for="job-search-input">Find your next opportunity</label>
       <div class="job-search__controls">
@@ -98,9 +98,6 @@
         </table>
       </div>
     </section>
-
   </main>
 
-  <?php include 'footer.php'; ?>
-</body>
-</html>
+<?php require __DIR__ . '/footer.php'; ?>

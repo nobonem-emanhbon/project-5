@@ -1,33 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>G05 Retail | About Us </title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="site-header">
-    <a class="site-brand" href="index.php" aria-label="G05 Retail home">
-      <svg class="site-brand__mark" role="img" aria-labelledby="brand-title" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-        <title id="brand-title">G05 Retail logo</title>
-        <path class="site-brand__mark-bg" d="M12 0h16a12 12 0 0 1 12 12v16a12 12 0 0 1-12 12H12A12 12 0 0 1 0 28V12A12 12 0 0 1 12 0Z"/>
-        <path class="site-brand__mark-g" d="M27.5 13.3A11 11 0 1 0 29 25h-9v-5h15v2.5A15 15 0 1 1 30.5 10z"/>
-        <circle class="site-brand__mark-accent" cx="29" cy="28" r="3"/>
-      </svg>
-      <span class="site-brand__name">G05 Retail</span>
-    </a>
-    <nav class="site-nav" aria-label="Main navigation">
-      <ul class="site-nav__list">
-        <li class="site-nav__item"><a class="site-nav__link" href="jobs.php">Jobs</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="benefits.php">Benefits</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="apply.php">Apply</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="aboutus.php" aria-current="page">About</a></li>
-        <li class="site-nav__item"><a class="site-nav__link" href="mailto:info@companyname.com">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+<?php
+// Keep styles.css before style.css so About-specific classes load without overriding the shared site header/footer variables.
+$page_title       = 'G05 Retail | About Us';
+$page_description = 'Meet Group 5, the team behind the G05 Retail digital platform, and view each member\'s project contributions.';
+$active_page      = 'about';
+$page_stylesheets = ['styles.css', 'style.css'];
+
+require __DIR__ . '/header.php';
+?>
 
   <main>
     <h1 class="page-title">About Us</h1>
@@ -52,7 +31,8 @@
             <img src="CuNguyenHuyMinh.jpg" alt="Cù Nguyễn Huy Minh" class="profile-img">
             <span class="profile-name">Cù Nguyễn Huy Minh</span>
           </dt>
-          <dd>Contribution: Team leader, Index page, job page and Layout</dd>
+          <dd><strong>Part 1 Contribution:</strong> Team leader, Index page, job page and Layout</dd>
+          <dd><strong>Part 2 Contribution:</strong> Team leader, modular PHP conversion of Index page (<code>index.php</code>), Jobs page (<code>jobs.php</code>), and shared layout templates (<code>header.php</code>, <code>footer.php</code>)</dd>
           <dd class="quote">
             <span class="lang">Vietnamese:</span> "Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao."<br>
             <span class="lang">English:</span> One tree alone cannot make a hill, but three trees together make a high mountain
@@ -62,7 +42,8 @@
             <img src="NguyenDinhAn.jpg" alt="Nguyễn Đình An" class="profile-img">
             <span class="profile-name">Nguyễn Đình An</span>
           </dt>
-          <dd>Contribution: About page, benefits page</dd>
+          <dd><strong>Part 1 Contribution:</strong> About page, benefits page</dd>
+          <dd><strong>Part 2 Contribution:</strong> Modular PHP conversion of About page (<code>aboutus.php</code>) and Benefits page (<code>benefits.php</code>), and updating group member contributions</dd>
           <dd class="quote">
             <span class="lang">Vietnamese:</span> "Không có gì quý hơn độc lập, tự do"<br>
             <span class="lang">English:</span> "Nothing is more precious than independence and freedom."
@@ -72,7 +53,8 @@
             <img src="Ledacphuc.jpg" alt="Lê Đắc Phúc" class="profile-img">
             <span class="profile-name">Lê Đắc Phúc</span>
           </dt>
-          <dd>Contribution:Apply page, final touches of the GUI</dd>
+          <dd><strong>Part 1 Contribution:</strong> Apply page, final touches of the GUI</dd>
+          <dd><strong>Part 2 Contribution:</strong> Modular PHP conversion of Apply page (<code>apply.php</code>) and final touches of the GUI</dd>
           <dd class="quote">
             <span class="lang">Vietnamese:</span> "Học đi đôi với hành  "<br>
             <span class="lang">English:</span> "Learning goes hand in hand with practice."
@@ -93,38 +75,20 @@
           </thead>
           <tbody>
             <tr><td>Cù Nguyễn Huy Minh</td><td>Game developer</td><td>Energy drink</td></tr>
-            <tr><td>Nguyễn Đình An</td><td>Game & Web developer</td><td>Mint candy</td></tr>
-            <tr><td>Lê Đắc Phức</td><td>Data scientist</td><td>Water</td></tr>
+            <tr><td>Nguyễn Đình An</td><td>Game &amp; Web developer</td><td>Mint candy</td></tr>
+            <tr><td>Lê Đắc Phúc</td><td>Data scientist</td><td>Water</td></tr>
           </tbody>
         </table>
-      </div> 
+      </div>
     </section>
 
     <h1 class="page-title">Acknowledgement of Country</h1>
     <p class="page-sub"><u>Our acknowledgement towards the Aboriginal and Torres Strait Islander peoples.</u></p>
     <section class="section">
       <div class="card">
-          <p><b>We respectfully acknowledge the Wurundjeri People of the Kulin Nation, who are the Traditional Owners of the land on which Swinburne’s Australian campuses are located in Melbourne’s east and outer-east, and pay our respect to their Elders past, present and emerging. We are honoured to recognise our connection to Wurundjeri Country, history, culture and spirituality through these locations, and strive to ensure that we operate in a manner that respects and honours the Elders and Ancestors of these lands. We also respectfully acknowledge Swinburne’s Aboriginal and Torres Strait Islander staff, students, alumni, partners and visitors. We also acknowledge and respect the Traditional Owners of lands across Australia, their Elders, Ancestors, cultures and heritage, and recognise the continuing sovereignties of all Aboriginal and Torres Strait Islander Nations.
-          </b></p>
-
+        <p><b>We respectfully acknowledge the Wurundjeri People of the Kulin Nation, who are the Traditional Owners of the land on which Swinburne’s Australian campuses are located in Melbourne’s east and outer-east, and pay our respect to their Elders past, present and emerging. We are honoured to recognise our connection to Wurundjeri Country, history, culture and spirituality through these locations, and strive to ensure that we operate in a manner that respects and honours the Elders and Ancestors of these lands. We also respectfully acknowledge Swinburne’s Aboriginal and Torres Strait Islander staff, students, alumni, partners and visitors. We also acknowledge and respect the Traditional Owners of lands across Australia, their Elders, Ancestors, cultures and heritage, and recognise the continuing sovereignties of all Aboriginal and Torres Strait Islander Nations.</b></p>
       </div>
     </section>
   </main>
-  <footer class="site-footer" id="contact">
-    <div class="footer-content">
-      <div class="footer-brand">
-        <h2 class="footer-brand__name">G05 Retail</h2>
-        <p class="footer-brand__copyright">&copy; 2026 G05 Retail. All rights reserved.</p>
-      </div>
-      <nav class="footer-nav" aria-label="Project and contact links">
-        <ul class="footer-links">
-          <li class="footer-links__item"><a class="footer-links__link" href="https://ngdinhan08-1790740529378.atlassian.net/browse/SCRUM-5?atlOrigin=eyJpIjoiNzU4MTgwY2Y4MGVkNDBhZGIyZGRjOTU4ZDQ2NzgzZjYiLCJwIjoiaiJ9" target="_blank" rel="noopener">Jira project</a></li>
-          <li class="footer-links__item"><a class="footer-links__link" href="https://github.com/nobonem-emanhbon/project-5.git" target="_blank" rel="noopener">GitHub repository</a></li>
-          <li class="footer-links__item"><a class="footer-links__link" href="mailto:info@companyname.com">booking@G05.com</a></li>
-        </ul>
-      </nav>
-    </div>
-  </footer>
 
-</body>
-</html>
+<?php require __DIR__ . '/footer.php'; ?>

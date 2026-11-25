@@ -1,33 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>G05 Retail | Benefits</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="benefits.css">
-</head>
-<body>
+<?php
+// Load style.css followed by benefits.css so the shared header/footer and page-specific cards both style properly.
+$page_title       = 'G05 Retail | Benefits';
+$page_description = 'Discover employee benefits, flexible rosters, staff discounts, and career growth pathways at G05 Retail.';
+$active_page      = 'benefits';
+$page_stylesheets = ['style.css', 'benefits.css'];
 
-  <header>
-    <div class="nav">
-      <a class="brand" href="index.php"><svg class="brand-mark" role="img" aria-labelledby="brand-title" viewBox="0 0 40 40" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-          <title id="brand-title">G05 Retail logo</title>
-          <rect width="40" height="40" rx="12" fill="#0A66C2"/>
-          <path d="M27.5 13.3A11 11 0 1 0 29 25h-9v-5h15v2.5A15 15 0 1 1 30.5 10z" fill="#fff"/>
-          <circle cx="29" cy="28" r="3" fill="#F5C518"/>
-        </svg> G05 Retail</a>
-      <nav aria-label="Main">
-        <ul>
-          <li><a href="jobs.php">Jobs</a></li>
-          <li><a href="benefits.php" aria-current="page">Benefits</a></li>
-          <li><a href="apply.php">Apply</a></li>
-          <li><a href="aboutus.php">About</a></li>
-          <li><a href="mailto:info@companyname.com">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+require __DIR__ . '/header.php';
+?>
 
   <main>
     <section class="card hero" aria-labelledby="page-title">
@@ -40,30 +19,30 @@
         </p>
       </div>
       <svg class="art" viewBox="0 0 320 240" role="img" aria-label="Two friendly G05 Retail team members standing under a store awning">
-          <rect width="320" height="240" rx="18" fill="#e8f1fb"/>
-          <circle cx="264" cy="56" r="26" fill="#f5c518"/>
-          <polygon points="40,36 280,36 300,84 20,84" fill="#0b66c3"/>
-          <polygon points="80,36 120,36 113.3,84 66.7,84" fill="#fff"/>
-          <polygon points="160,36 200,36 206.7,84 160,84" fill="#fff"/>
-          <rect x="20" y="198" width="280" height="8" rx="4" fill="#c9d6e6"/>
-          <rect x="84" y="130" width="52" height="68" rx="22" fill="#0b66c3"/>
-          <circle cx="110" cy="112" r="18" fill="#f2c9a0"/>
-          <path d="M92 110 A18 18 0 0 1 128 110 Z" fill="#1b1f24"/>
-          <rect x="116" y="150" width="14" height="9" rx="2" fill="#fff"/>
-          <rect x="184" y="130" width="52" height="68" rx="22" fill="#f5c518"/>
-          <circle cx="210" cy="112" r="18" fill="#d9a273"/>
-          <path d="M192 112 A18 18 0 0 1 228 112 Q210 100 192 112 Z" fill="#1b1f24"/>
-          <rect x="216" y="150" width="14" height="9" rx="2" fill="#fff"/>
-          <circle cx="104" cy="114" r="2" fill="#1b1f24"/><circle cx="116" cy="114" r="2" fill="#1b1f24"/>
-          <circle cx="204" cy="114" r="2" fill="#1b1f24"/><circle cx="216" cy="114" r="2" fill="#1b1f24"/>
-          <path d="M104 121 Q110 126 116 121" fill="none" stroke="#1b1f24" stroke-width="1.6" stroke-linecap="round"/>
-          <path d="M204 121 Q210 126 216 121" fill="none" stroke="#1b1f24" stroke-width="1.6" stroke-linecap="round"/>
-          <g transform="translate(262 150)">
-            <path d="M0 14 h34 l-4 36 h-26 z" fill="#fff" stroke="#c9d6e6"/>
-            <path d="M9 14 v-6 a8 8 0 0 1 16 0 v6" fill="none" stroke="#0b66c3" stroke-width="3"/>
-            <text x="17" y="39" text-anchor="middle" font-size="16" font-weight="700" fill="#0b66c3" font-family="Segoe UI, Arial, sans-serif">%</text>
-          </g>
-        </svg>
+        <rect width="320" height="240" rx="18" fill="#e8f1fb"/>
+        <circle cx="264" cy="56" r="26" fill="#f5c518"/>
+        <polygon points="40,36 280,36 300,84 20,84" fill="#0b66c3"/>
+        <polygon points="80,36 120,36 113.3,84 66.7,84" fill="#fff"/>
+        <polygon points="160,36 200,36 206.7,84 160,84" fill="#fff"/>
+        <rect x="20" y="198" width="280" height="8" rx="4" fill="#c9d6e6"/>
+        <rect x="84" y="130" width="52" height="68" rx="22" fill="#0b66c3"/>
+        <circle cx="110" cy="112" r="18" fill="#f2c9a0"/>
+        <path d="M92 110 A18 18 0 0 1 128 110 Z" fill="#1b1f24"/>
+        <rect x="116" y="150" width="14" height="9" rx="2" fill="#fff"/>
+        <rect x="184" y="130" width="52" height="68" rx="22" fill="#f5c518"/>
+        <circle cx="210" cy="112" r="18" fill="#d9a273"/>
+        <path d="M192 112 A18 18 0 0 1 228 112 Q210 100 192 112 Z" fill="#1b1f24"/>
+        <rect x="216" y="150" width="14" height="9" rx="2" fill="#fff"/>
+        <circle cx="104" cy="114" r="2" fill="#1b1f24"/><circle cx="116" cy="114" r="2" fill="#1b1f24"/>
+        <circle cx="204" cy="114" r="2" fill="#1b1f24"/><circle cx="216" cy="114" r="2" fill="#1b1f24"/>
+        <path d="M104 121 Q110 126 116 121" fill="none" stroke="#1b1f24" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M204 121 Q210 126 216 121" fill="none" stroke="#1b1f24" stroke-width="1.6" stroke-linecap="round"/>
+        <g transform="translate(262 150)">
+          <path d="M0 14 h34 l-4 36 h-26 z" fill="#fff" stroke="#c9d6e6"/>
+          <path d="M9 14 v-6 a8 8 0 0 1 16 0 v6" fill="none" stroke="#0b66c3" stroke-width="3"/>
+          <text x="17" y="39" text-anchor="middle" font-size="16" font-weight="700" fill="#0b66c3" font-family="Segoe UI, Arial, sans-serif">%</text>
+        </g>
+      </svg>
     </section>
 
     <section class="card" aria-labelledby="benefits-title">
@@ -102,25 +81,24 @@
       </div>
     </section>
 
-
     <section class="card" aria-labelledby="growth-title">
       <h2 id="growth-title">Grow your career with us</h2>
       <p>Many of our team start on the shop floor. Here's a typical path through the store.</p>
       <div class="growth">
         <ol class="path">
-        <li>
-          <div><strong>Cashier or team member</strong><span>Learn the store, the products, and how to look after customers.</span></div>
-        </li>
-        <li>
-          <div><strong>Experienced team member</strong><span>Take on stock control, merchandising, and help train new starters.</span></div>
-        </li>
-        <li>
-          <div><strong>Supervisor</strong><span>Lead a shift, handle escalations, and support the team on the floor.</span></div>
-        </li>
-        <li>
-          <div><strong>Store Manager</strong><span>Run the store day to day and report results to the regional manager.</span></div>
-        </li>
-      </ol>
+          <li>
+            <div><strong>Cashier or team member</strong><span>Learn the store, the products, and how to look after customers.</span></div>
+          </li>
+          <li>
+            <div><strong>Experienced team member</strong><span>Take on stock control, merchandising, and help train new starters.</span></div>
+          </li>
+          <li>
+            <div><strong>Supervisor</strong><span>Lead a shift, handle escalations, and support the team on the floor.</span></div>
+          </li>
+          <li>
+            <div><strong>Store Manager</strong><span>Run the store day to day and report results to the regional manager.</span></div>
+          </li>
+        </ol>
         <svg class="art" viewBox="0 0 280 220" role="img" aria-label="Four steps rising from team member to store manager, with a flag on the top step">
           <rect width="280" height="220" rx="18" fill="#e8f1fb"/>
           <rect x="20" y="150" width="56" height="50" rx="6" fill="#9cc3ee"/>
@@ -163,19 +141,4 @@
     </section>
   </main>
 
-  <footer>
-    <div class="footer-inner">
-      <div>
-        <strong>G05 Retail</strong><br>
-        &copy; 2026 G05 Retail. All rights reserved.
-      </div>
-      <div>
-        <a href="https://ngdinhan08-1790740529378.atlassian.net/browse/SCRUM-5?atlOrigin=eyJpIjoiNzU4MTgwY2Y4MGVkNDBhZGIyZGRjOTU4ZDQ2NzgzZjYiLCJwIjoiaiJ9">Jira project</a>
-        <a href="https://github.com/nobonem-emanhbon/project-5.git">GitHub repository</a>
-        <a href="mailto:info@companyname.com">booking@G05.com</a>
-      </div>
-    </div>
-  </footer>
-
-</body>
-</html>
+<?php require __DIR__ . '/footer.php'; ?>
