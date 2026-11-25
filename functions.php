@@ -114,7 +114,7 @@ function create_jobs_table(mysqli $conn): void
 
     $jobs = [
         [
-            'RM101', 'Store Manager', 'images/storemanager.jpg',
+            'RM101', 'Store Manager', 'storemanager.jpg',
             'Illustration of a store manager holding a clipboard outside a retail store',
             'Full-time',
             'Lead day-to-day operations at our retail store and support a team committed to friendly, reliable customer service. You will help meet store targets while maintaining safe, well-presented departments.',
@@ -134,7 +134,7 @@ function create_jobs_table(mysqli $conn): void
             . "Experience supporting staff development and performance reviews.",
         ],
         [
-            'CS204', 'Cashier', 'images/cashier.jpg',
+            'CS204', 'Cashier', 'cashier.jpg',
             'Illustration of a cashier serving a customer at a checkout counter',
             'Casual',
             'Help customers complete their purchases accurately and make each checkout interaction welcoming. This casual role works across a roster that may include evenings and weekends.',
@@ -248,28 +248,25 @@ function create_about_table(mysqli $conn): void
      */
     $members = [
         [
-            'Cù Nguyễn Huy Minh', 'images/CuNguyenHuyMinh.jpg',
-            "Index page and layout",
-            "Moved the shared header, navigation and footer into header.inc, nav.inc and footer.inc\n"
-            . "Converted index.html and benefits.html to PHP pages and merged the stylesheets",
+            'Cù Nguyễn Huy Minh', 'CuNguyenHuyMinh.jpg',
+            "Team leader, Index page, job page and Layout",
+            "Team leader, shared PHP templates (header.php, footer.php), and database-driven Index & Jobs pages with search",
             'Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao.',
             'One tree alone cannot make a hill, but three trees together make a high mountain.',
             'Game developer', 'Energy drink', 1,
         ],
         [
-            'Nguyễn Đình An', 'images/NguyenDinhAn.jpg',
-            "About page",
-            "Built the about table and loads the member details from the database\n"
-            . "Built the login page and the HR manager page (manage.php)",
+            'Nguyễn Đình An', 'NguyenDinhAn.jpg',
+            "About page, benefits page",
+            "Database-driven About page (aboutus.php), Benefits page (benefits.php), and HR manager login & management portal (login.php, manage.php)",
             'Không có gì quý hơn độc lập, tự do.',
             'Nothing is more precious than independence and freedom.',
             'Game & Web developer', 'Mint candy', 2,
         ],
         [
-            'Lê Đắc Phúc', 'images/Ledacphuc.jpg',
-            "Jobs and Apply pages",
-            "Created the jobs table and the search on jobs.php\n"
-            . "Created the eoi table and process_eoi.php with server-side validation",
+            'Lê Đắc Phúc', 'Ledacphuc.jpg',
+            "Apply page, final touches of the GUI",
+            "Database-backed Apply page (apply.php), EOI table and server-side validation (process_eoi.php), and final GUI touches",
             'Học đi đôi với hành.',
             'Learning goes hand in hand with practice.',
             'Data scientist', 'Water', 3,
@@ -402,4 +399,35 @@ function skill_options(): array
         'stocker'       => 'Stocker',
         'other'         => 'Other',
     ];
+}
+
+/** Check that a 4-digit Australian postcode starts with a valid digit for the chosen state. */
+function postcode_matches_state(string $state, string $postcode): bool
+{
+    if (!preg_match('/^\d{4}$/', $postcode)) {
+        return false;
+    }
+
+    $prefixes = [
+        'VIC' => ['3', '8'],
+        'NSW' => ['1', '2'],
+        'QLD' => ['4', '9'],
+        'NT'  => ['0'],
+        'WA'  => ['6'],
+        'SA'  => ['5'],
+        'TAS' => ['7'],
+        'ACT' => ['0'],
+    ];
+
+    if (!isset($prefixes[$state])) {
+        return false;
+    }
+
+    return in_array($postcode[0], $prefixes[$state], true);
+}
+
+/** Allowed EOI workflow statuses for manage.php. */
+function eoi_status_options(): array
+{
+    return ['New', 'Current', 'Final'];
 }

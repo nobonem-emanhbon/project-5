@@ -787,3 +787,104 @@ select.form-control {
     padding: 16px;
   }
 }
+
+/* ===== Part 2 Feedback Banners, Badges, Login & HR Manager ===== */
+.message {
+  width: min(100% - 40px, 760px);
+  margin: 0 auto var(--space-3);
+  padding: 14px 18px;
+  border-radius: 10px;
+  border-left: 4px solid var(--blue);
+  background: #EAF3FB;
+  color: var(--black);
+}
+
+.message--error {
+  border-left-color: #C62828;
+  background: #FDECEA;
+}
+
+.message--success {
+  border-left-color: #2E7D32;
+  background: #EDF7ED;
+}
+
+.message ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.home-main .message {
+  width: 100%;
+}
+
+.badge {
+  display: inline-block;
+  margin: 0 6px 8px 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.badge--reference {
+  background: #EAF3FB;
+  color: var(--blue-dark);
+}
+
+.badge--type {
+  background: #FFF8DC;
+  color: var(--black);
+}
+
+.login-card {
+  width: min(100% - 40px, 480px);
+  margin: 48px auto;
+}
+
+.manage-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: var(--space-3);
+}
+
+.manage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.manage-inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.manage-inline-form .form-control {
+  width: auto;
+  min-height: 36px;
+  padding: 6px 32px 6px 10px;
+}
+
+.button--small {
+  min-height: 36px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
+
+.button--danger {
+  border-color: #C62828;
+  background: #C62828;
+  color: var(--white);
+}
+
+.button--danger:hover {
+  border-color: #8E0000;
+  background: #8E0000;
+  color: var(--white);
+}

@@ -1,8 +1,48 @@
 <?php
-// Stage 1 modular PHP version: renders static job listings using shared templates.
-// Database-driven job loading and search filtering are deferred to the next stage.
+require_once __DIR__ . '/functions.php';
+
+$conn = db_connect();
+create_jobs_table($conn);
+
+// Read and tidy optional search query from either index.php or the jobs.php search bar.
+$search_query = isset($_GET['q']) ? tidy_input($_GET['q']) : '';
+$jobs = [];
+
+if ($search_query !== '') {
+    $like = '%' . $search_query . '%';
+    $stmt = $conn->prepare(
+        'SELECT reference, title, image, image_alt, employment_type, summary, salary, reports_to, responsibilities, essential, preferred
+         FROM jobs
+         WHERE reference LIKE ?
+            OR title LIKE ?
+            OR employment_type LIKE ?
+            OR summary LIKE ?
+            OR responsibilities LIKE ?
+            OR essential LIKE ?
+         ORDER BY reference'
+    );
+    $stmt->bind_param('ssssss', $like, $like, $like, $like, $like, $like);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $jobs[] = $row;
+    }
+    $stmt->close();
+} else {
+    $result = $conn->query(
+        'SELECT reference, title, image, image_alt, employment_type, summary, salary, reports_to, responsibilities, essential, preferred
+         FROM jobs
+         ORDER BY reference'
+    );
+    while ($row = $result->fetch_assoc()) {
+        $jobs[] = $row;
+    }
+}
+
+$conn->close();
+
 $page_title       = 'G05 Retail | Current Job Openings';
-$page_description = 'Explore current job openings at G05 Retail, including Store Manager and Cashier positions.';
+$page_description = 'Explore current job openings at G05 Retail loaded dynamically from our database, with search filtering.';
 $active_page      = 'jobs';
 $page_stylesheets = ['style.css', 'jobs.css'];
 
@@ -16,119 +56,90 @@ require __DIR__ . '/header.php';
       <p class="page-intro__copy">Join a team focused on helpful service, dependable store operations, and a positive experience for every customer. Review the roles below and follow the application instructions to be considered.</p>
     </section>
 
+    <form class="job-search card" role="search" action="jobs.php" method="get">
+      <label class="job-search__label" for="jobs-search-input">Search current openings</label>
+      <div class="job-search__controls">
+        <input class="form-control job-search__input" id="jobs-search-input" name="q" type="search" value="<?= e($search_query) ?>" placeholder="Search by title, reference (e.g. RM101), or type..." autocomplete="off">
+        <button class="button button--primary" type="submit">Search</button>
+<?php if ($search_query !== ''): ?>
+        <a class="button button--secondary" href="jobs.php">Clear</a>
+<?php endif; ?>
+      </div>
+    </form>
+
     <div class="jobs-layout">
       <div class="job-listings">
-        <section class="job-card card" id="job-RM101" aria-labelledby="store-manager-title">
+<?php if (!$jobs): ?>
+        <section class="card" aria-live="polite">
+          <h2 class="card__title">No matching roles found</h2>
+          <p class="home-card__copy">No open positions matched &ldquo;<?= e($search_query) ?>&rdquo;. Try another keyword or <a href="jobs.php">view all openings</a>.</p>
+        </section>
+<?php else: ?>
+<?php foreach ($jobs as $job): ?>
+<?php
+        $ref_id = strtolower(preg_replace('/[^A-Za-z0-9_-]/', '', $job['reference']));
+        $responsibilities = split_lines($job['responsibilities']);
+        $essential_items  = split_lines($job['essential']);
+        $preferred_items  = split_lines($job['preferred']);
+?>
+        <section class="job-card card" id="job-<?= e($ref_id) ?>" aria-labelledby="job-title-<?= e($ref_id) ?>">
           <article class="job-card__article">
-            <img class="job-card__image" src="storemanager.jpg" alt="Illustration of a store manager holding a clipboard outside a retail store" width="500" height="320" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 16px;">
+            <img class="job-card__image" src="<?= e($job['image']) ?>" alt="<?= e($job['image_alt']) ?>" width="500" height="320" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 16px;">
             <div class="job-card__heading">
               <div class="job-card__badges">
-                <span class="badge badge--reference">Ref: RM101</span>
-                <span class="badge badge--type">Full-time</span>
+                <span class="badge badge--reference">Ref: <?= e($job['reference']) ?></span>
+                <span class="badge badge--type"><?= e($job['employment_type']) ?></span>
               </div>
-              <h2 class="job-card__title" id="store-manager-title">Store Manager</h2>
-              <p class="job-card__summary">Lead day-to-day operations at our retail store and support a team committed to friendly, reliable customer service. You will help meet store targets while maintaining safe, well-presented departments.</p>
+              <h2 class="job-card__title" id="job-title-<?= e($ref_id) ?>"><?= e($job['title']) ?></h2>
+              <p class="job-card__summary"><?= e($job['summary']) ?></p>
             </div>
 
             <dl class="job-card__details">
               <div class="job-card__detail">
                 <dt class="job-card__term">Salary</dt>
-                <dd class="job-card__value">AUD $68,000–$78,000 per year plus superannuation</dd>
+                <dd class="job-card__value"><?= e($job['salary']) ?></dd>
               </div>
               <div class="job-card__detail">
                 <dt class="job-card__term">Reports to</dt>
-                <dd class="job-card__value">Regional Operations Manager</dd>
+                <dd class="job-card__value"><?= e($job['reports_to']) ?></dd>
               </div>
             </dl>
 
-            <section class="job-card__section" aria-labelledby="manager-responsibilities">
-              <h3 class="job-card__subheading" id="manager-responsibilities">Key responsibilities</h3>
+            <section class="job-card__section" aria-labelledby="resp-<?= e($ref_id) ?>">
+              <h3 class="job-card__subheading" id="resp-<?= e($ref_id) ?>">Key responsibilities</h3>
               <ol class="job-card__list job-card__list--ordered">
-                <li>Coordinate daily store operations, opening and closing procedures, and floor coverage.</li>
-                <li>Coach, roster, and support team members to deliver consistent customer service.</li>
-                <li>Monitor sales, stock levels, and operating costs; report results to the regional manager.</li>
-                <li>Maintain merchandising, cleanliness, and workplace health and safety standards.</li>
-                <li>Resolve customer enquiries and escalate complex concerns appropriately.</li>
+<?php foreach ($responsibilities as $item): ?>
+                <li><?= e($item) ?></li>
+<?php endforeach; ?>
               </ol>
             </section>
 
             <div class="requirements-grid">
-              <section class="requirements-group requirements-group--essential" aria-labelledby="manager-essential">
-                <h3 class="job-card__subheading" id="manager-essential">Essential requirements</h3>
+              <section class="requirements-group requirements-group--essential" aria-labelledby="ess-<?= e($ref_id) ?>">
+                <h3 class="job-card__subheading" id="ess-<?= e($ref_id) ?>">Essential requirements</h3>
                 <ul class="job-card__list requirements-group__list">
-                  <li>At least two years’ retail supervisory or management experience.</li>
-                  <li>Strong communication, organisation, and customer service skills.</li>
-                  <li>Availability to work a rotating roster, including some weekends.</li>
-                  <li>Australian working rights for full-time employment.</li>
+<?php foreach ($essential_items as $item): ?>
+                  <li><?= e($item) ?></li>
+<?php endforeach; ?>
                 </ul>
               </section>
-              <section class="requirements-group requirements-group--preferred" aria-labelledby="manager-preferred">
-                <h3 class="job-card__subheading" id="manager-preferred">Preferable requirements</h3>
+              <section class="requirements-group requirements-group--preferred" aria-labelledby="pref-<?= e($ref_id) ?>">
+                <h3 class="job-card__subheading" id="pref-<?= e($ref_id) ?>">Preferable requirements</h3>
                 <ul class="job-card__list requirements-group__list">
-                  <li>Experience using point-of-sale and inventory systems.</li>
-                  <li>Certificate IV in Retail Management or equivalent training.</li>
-                  <li>Experience supporting staff development and performance reviews.</li>
+<?php foreach ($preferred_items as $item): ?>
+                  <li><?= e($item) ?></li>
+<?php endforeach; ?>
                 </ul>
               </section>
             </div>
+
+            <p style="margin-top: 20px; margin-bottom: 0;">
+              <a class="button button--primary" href="apply.php?job=<?= rawurlencode($job['reference']) ?>">Apply for <?= e($job['title']) ?></a>
+            </p>
           </article>
         </section>
-
-        <section class="job-card card" id="job-CS204" aria-labelledby="cashier-title">
-          <article class="job-card__article">
-            <img class="job-card__image" src="cashier.jpg" alt="Illustration of a cashier serving a customer at a checkout counter" width="500" height="320" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 16px;">
-            <div class="job-card__heading">
-              <div class="job-card__badges">
-                <span class="badge badge--reference">Ref: CS204</span>
-                <span class="badge badge--type">Casual</span>
-              </div>
-              <h2 class="job-card__title" id="cashier-title">Cashier</h2>
-              <p class="job-card__summary">Help customers complete their purchases accurately and make each checkout interaction welcoming. This casual role works across a roster that may include evenings and weekends.</p>
-            </div>
-
-            <dl class="job-card__details">
-              <div class="job-card__detail">
-                <dt class="job-card__term">Salary</dt>
-                <dd class="job-card__value">AUD $31.20–$35.00 per hour plus superannuation, depending on experience and applicable award rates</dd>
-              </div>
-              <div class="job-card__detail">
-                <dt class="job-card__term">Reports to</dt>
-                <dd class="job-card__value">Customer Service Supervisor</dd>
-              </div>
-            </dl>
-
-            <section class="job-card__section" aria-labelledby="cashier-responsibilities">
-              <h3 class="job-card__subheading" id="cashier-responsibilities">Key responsibilities</h3>
-              <ol class="job-card__list job-card__list--ordered">
-                <li>Process purchases, refunds, and exchanges accurately using the point-of-sale system.</li>
-                <li>Greet customers and respond to routine questions about products and services.</li>
-                <li>Handle cash and electronic payments in line with store procedures.</li>
-                <li>Keep the checkout area clean, stocked, and ready for customers.</li>
-                <li>Contact a supervisor when an enquiry or transaction needs further assistance.</li>
-              </ol>
-            </section>
-
-            <div class="requirements-grid">
-              <section class="requirements-group requirements-group--essential" aria-labelledby="cashier-essential">
-                <h3 class="job-card__subheading" id="cashier-essential">Essential requirements</h3>
-                <ul class="job-card__list requirements-group__list">
-                  <li>Clear communication and a polite, customer-focused approach.</li>
-                  <li>Care and accuracy when handling transactions.</li>
-                  <li>Availability for a flexible casual roster, including weekends.</li>
-                  <li>Australian working rights for casual employment.</li>
-                </ul>
-              </section>
-              <section class="requirements-group requirements-group--preferred" aria-labelledby="cashier-preferred">
-                <h3 class="job-card__subheading" id="cashier-preferred">Preferable requirements</h3>
-                <ul class="job-card__list requirements-group__list">
-                  <li>Previous retail, hospitality, or cashier experience.</li>
-                  <li>Familiarity with point-of-sale systems and electronic payments.</li>
-                  <li>First aid training or willingness to complete relevant training.</li>
-                </ul>
-              </section>
-            </div>
-          </article>
-        </section>
+<?php endforeach; ?>
+<?php endif; ?>
       </div>
 
       <aside class="application-aside notice" id="about" aria-labelledby="apply-help-title" style="width: 100%; margin-top: 0;">

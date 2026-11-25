@@ -1,7 +1,23 @@
 <?php
+require_once __DIR__ . '/functions.php';
+
+$conn = db_connect();
+create_about_table($conn);
+
+$members = [];
+$result = $conn->query(
+    'SELECT member_name, photo, part1_work, part2_work, quote_vi, quote_en, dream_job, coding_snack
+     FROM about
+     ORDER BY sort_order ASC, id ASC'
+);
+while ($row = $result->fetch_assoc()) {
+    $members[] = $row;
+}
+$conn->close();
+
 // Keep styles.css before style.css so About-specific classes load without overriding the shared site header/footer variables.
 $page_title       = 'G05 Retail | About Us';
-$page_description = 'Meet Group 5, the team behind the G05 Retail digital platform, and view each member\'s project contributions.';
+$page_description = 'Meet Group 5, the team behind the G05 Retail digital platform, and view each member\'s Part 1 and Part 2 project contributions.';
 $active_page      = 'about';
 $page_stylesheets = ['styles.css', 'style.css'];
 
@@ -10,7 +26,7 @@ require __DIR__ . '/header.php';
 
   <main>
     <h1 class="page-title">About Us</h1>
-    <p class="page-sub"><u>Meet the team behin the G05 retail platform.</u></p>
+    <p class="page-sub"><u>Meet the team behind the G05 retail platform.</u></p>
 
     <section class="section">
       <div class="car">
@@ -27,38 +43,18 @@ require __DIR__ . '/header.php';
       <div>
         <h3>Members and contributions</h3>
         <dl class="members">
+<?php foreach ($members as $member): ?>
           <dt class="profile-header">
-            <img src="CuNguyenHuyMinh.jpg" alt="Cù Nguyễn Huy Minh" class="profile-img">
-            <span class="profile-name">Cù Nguyễn Huy Minh</span>
+            <img src="<?= e($member['photo']) ?>" alt="<?= e($member['member_name']) ?>" class="profile-img">
+            <span class="profile-name"><?= e($member['member_name']) ?></span>
           </dt>
-          <dd><strong>Part 1 Contribution:</strong> Team leader, Index page, job page and Layout</dd>
-          <dd><strong>Part 2 Contribution:</strong> Team leader, modular PHP conversion of Index page (<code>index.php</code>), Jobs page (<code>jobs.php</code>), and shared layout templates (<code>header.php</code>, <code>footer.php</code>)</dd>
+          <dd><strong>Part 1 Contribution:</strong> <?= e($member['part1_work']) ?></dd>
+          <dd><strong>Part 2 Contribution:</strong> <?= e($member['part2_work']) ?></dd>
           <dd class="quote">
-            <span class="lang">Vietnamese:</span> "Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao."<br>
-            <span class="lang">English:</span> One tree alone cannot make a hill, but three trees together make a high mountain
+            <span class="lang">Vietnamese:</span> &ldquo;<?= e($member['quote_vi']) ?>&rdquo;<br>
+            <span class="lang">English:</span> &ldquo;<?= e($member['quote_en']) ?>&rdquo;
           </dd>
-
-          <dt class="profile-header">
-            <img src="NguyenDinhAn.jpg" alt="Nguyễn Đình An" class="profile-img">
-            <span class="profile-name">Nguyễn Đình An</span>
-          </dt>
-          <dd><strong>Part 1 Contribution:</strong> About page, benefits page</dd>
-          <dd><strong>Part 2 Contribution:</strong> Modular PHP conversion of About page (<code>aboutus.php</code>) and Benefits page (<code>benefits.php</code>), and updating group member contributions</dd>
-          <dd class="quote">
-            <span class="lang">Vietnamese:</span> "Không có gì quý hơn độc lập, tự do"<br>
-            <span class="lang">English:</span> "Nothing is more precious than independence and freedom."
-          </dd>
-
-          <dt class="profile-header">
-            <img src="Ledacphuc.jpg" alt="Lê Đắc Phúc" class="profile-img">
-            <span class="profile-name">Lê Đắc Phúc</span>
-          </dt>
-          <dd><strong>Part 1 Contribution:</strong> Apply page, final touches of the GUI</dd>
-          <dd><strong>Part 2 Contribution:</strong> Modular PHP conversion of Apply page (<code>apply.php</code>) and final touches of the GUI</dd>
-          <dd class="quote">
-            <span class="lang">Vietnamese:</span> "Học đi đôi với hành  "<br>
-            <span class="lang">English:</span> "Learning goes hand in hand with practice."
-          </dd>
+<?php endforeach; ?>
         </dl>
       </div>
 
@@ -74,9 +70,13 @@ require __DIR__ . '/header.php';
             </tr>
           </thead>
           <tbody>
-            <tr><td>Cù Nguyễn Huy Minh</td><td>Game developer</td><td>Energy drink</td></tr>
-            <tr><td>Nguyễn Đình An</td><td>Game &amp; Web developer</td><td>Mint candy</td></tr>
-            <tr><td>Lê Đắc Phúc</td><td>Data scientist</td><td>Water</td></tr>
+<?php foreach ($members as $member): ?>
+            <tr>
+              <td><?= e($member['member_name']) ?></td>
+              <td><?= e($member['dream_job']) ?></td>
+              <td><?= e($member['coding_snack']) ?></td>
+            </tr>
+<?php endforeach; ?>
           </tbody>
         </table>
       </div>

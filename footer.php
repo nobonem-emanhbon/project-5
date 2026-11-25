@@ -17,6 +17,7 @@ $contact_email = $contact_email ?? 'booking@G05.com';
           <li class="footer-links__item"><a class="footer-links__link" href="https://ngdinhan08-1790740529378.atlassian.net/browse/SCRUM-5?atlOrigin=eyJpIjoiNzU4MTgwY2Y4MGVkNDBhZGIyZGRjOTU4ZDQ2NzgzZjYiLCJwIjoiaiJ9" target="_blank" rel="noopener">Jira project</a></li>
           <li class="footer-links__item"><a class="footer-links__link" href="https://github.com/nobonem-emanhbon/project-5.git" target="_blank" rel="noopener">GitHub repository</a></li>
           <li class="footer-links__item"><a class="footer-links__link" href="mailto:<?= htmlspecialchars($contact_email, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($contact_email, ENT_QUOTES, 'UTF-8') ?></a></li>
+          <li class="footer-links__item"><a class="footer-links__link" href="manage.php">HR manager login</a></li>
         </ul>
       </nav>
     </div>
